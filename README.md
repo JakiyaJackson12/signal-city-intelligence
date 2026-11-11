@@ -1,4 +1,6 @@
 # SIGNAL City Intelligence
+**Live interactive demo:** [Open SIGNAL live demo](https://signal-city-transit.netlify.app)
+
 
 An interactive transit intelligence prototype with a Leaflet map, route filtering, vehicle selection, and simulated anomaly analysis.
 
