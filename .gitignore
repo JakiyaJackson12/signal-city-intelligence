@@ -1,0 +1,20 @@
+# Python virtual environments and local data
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.db
+*.sqlite
+*.sqlite3
+.env
+.env.*
+!.env.example
+
+# Editor, OS, and dependency artifacts
+.DS_Store
+.vscode/
+.idea/
+node_modules/
+coverage/
+dist/
