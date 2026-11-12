@@ -1,0 +1,22 @@
+.map-head-actions{display:flex;gap:10px;align-items:center}
+#map-expand,.map-reset{border:1px solid #386074;color:#d7fff0;background:#122c37;border-radius:9px;padding:9px 12px;font-weight:700;font-size:11px;cursor:pointer}
+#map-expand:hover,.map-reset:hover{background:#204653;border-color:#9cf9c4}
+.map-panel #map{height:460px;touch-action:pan-x pan-y}
+.vehicle-row{cursor:pointer}
+.vehicle-row:focus-visible{outline:2px solid #a5ffcf;outline-offset:-2px}
+.map-open{overflow:hidden}
+.map-panel.map-fullscreen{position:fixed;inset:10px;z-index:99999;display:flex;flex-direction:column;background:#0a1727;box-shadow:0 0 0 100vmax rgba(2,7,15,.94);border:1px solid #3e8069;border-radius:18px}
+.map-panel.map-fullscreen #map{flex:1;height:auto;min-height:180px}
+.map-panel.map-fullscreen .panel-bottom{background:#101d2d}
+#fallbackPlot{cursor:grab;touch-action:none;user-select:none}
+.map-panel .coordinate-info{position:absolute;bottom:8px;left:12px;background:#0a1427cc;color:#c1e3ed;font-size:11px;padding:5px 10px;border-radius:8px;pointer-events:none}
+@media(max-width:760px){.map-panel #map{height:420px}.map-panel.map-fullscreen{inset:0;border-radius:0}.map-panel .map-toolbar{gap:6px;flex-wrap:wrap}.map-head-actions{gap:6px}#map-expand{font-size:10px}.map-info{display:none}}
+
+#liveBtn:disabled{cursor:not-allowed;opacity:.45}
+
+/* Accessible selectable vehicles while retaining the existing visual design. */
+.vehicle-feed .vehicle-row{display:flex;width:100%;text-align:left;color:inherit;font:inherit;background:transparent;border:0;border-bottom:1px solid #223449;align-items:center;justify-content:space-between;padding:14px;cursor:pointer}
+.vehicle-feed .vehicle-row:hover{background:#1b3040}
+.vehicle-feed .vehicle-row:focus-visible{outline:2px solid #a5ffcf;outline-offset:-2px}
+#map.map-tiles-unavailable{background:linear-gradient(135deg,#11263a,#1c3246)}
+#map.map-tiles-unavailable .leaflet-tile-pane{opacity:0}

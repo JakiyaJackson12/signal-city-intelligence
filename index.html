@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080f1c">
+  <title>SIGNAL — Transit intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="map-experience.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="https://jakiyajacksonshsu.netlify.app/#work" aria-label="SIGNAL home"><span class="brandmark">◈</span><span>SIGNAL<small>TRANSIT INTELLIGENCE</small></span></a>
+      <div class="side-caption">WORKSPACE</div>
+      <nav class="nav"><a class="active" href="#overview"><span>▦</span> Overview</a><a href="#operations"><span>◎</span> Live operations</a><a href="#analytics"><span>◫</span> Analytics</a><a href="#model"><span>✳</span> ML insights</a></nav>
+      <div class="side-caption">NETWORK</div>
+      <div class="network-mini"><span class="small-live"></span> Massachusetts Bay <strong>MBTA</strong></div>
+      <div class="sidebar-bottom"><div class="pulse-graphic">⌁</div><div>Built to understand<br><b>how cities move.</b></div><small>Engineering portfolio · v0.1</small></div>
+    </aside>
+    <main>
+      <header class="topbar"><div><span class="crumb">WORKSPACE</span><span class="slash"> / </span><span>Operations overview</span></div><div class="righthead"><span class="date" id="currentDate">—</span><span class="avatar">S</span></div></header>
+      <div class="content">
+        <section id="overview" class="hero"><div><p class="eyebrow"><span class="neon-dot"></span> TRANSIT OPERATIONS COMMAND CENTER</p><h1>City in motion<span class="period">.</span></h1><p class="subhead">A clearer picture of the network, from individual vehicles to the patterns behind their performance.</p></div><div class="hero-action"><div class="mode-switch" aria-label="Data mode"><button id="demoBtn" class="selected" aria-pressed="true">Demo network</button><button id="liveBtn" aria-pressed="false" disabled title="Requires the separately hosted FastAPI backend">Live MBTA · Backend required</button></div><p id="sourceNote">Simulated data · For demonstration</p></div></section>
+        <div class="notice" id="notice" role="status"><span class="notice-icon">ⓘ</span><span>Demo mode uses simulated vehicle positions and delays. The public preview runs on simulated data; live MBTA requires a separately hosted Python backend.</span></div>
+        <section class="section" id="operations"><div class="section-head"><div><span class="eyebrow muted">NETWORK HEALTH</span><h2>At a glance</h2></div><div class="refresh-wrap"><span class="time-note" id="updated">Awaiting data</span><button class="refresh" id="refreshBtn">↻ Refresh</button></div></div>
+          <div class="metrics">
+            <article class="metric"><div class="metric-label">Tracked vehicles <span>↗</span></div><strong id="vehiclesCount">—</strong><div class="metric-foot">Across tracked rapid transit lines</div></article>
+            <article class="metric"><div class="metric-label">Average observed delay <span>◷</span></div><strong id="avgDelay">—</strong><div class="metric-foot">Minutes · only where measured</div></article>
+            <article class="metric"><div class="metric-label">Observed on-time rate <span>◎</span></div><strong id="onTime">—</strong><div class="metric-foot">Less than 6 min delayed</div></article>
+            <article class="metric accent-card"><div class="metric-label">Data source <span>◉</span></div><strong class="source-metric" id="dataSource">DEMO</strong><div class="metric-foot" id="sourceFoot">Synthetic demonstration feed</div></article>
+          </div>
+          <div class="panel-grid"><div class="panel map-panel"><div class="panel-head"><div><span class="eyebrow muted">GEOSPATIAL VIEW</span><h3>Network map</h3></div><div class="map-head-actions"><div class="badge"><span class="neon-dot"></span><span id="mapMode">SIMULATED</span></div><button type="button" id="map-expand" aria-pressed="false" aria-label="Expand interactive transit map">⛶ Expand map</button></div></div><div class="map-toolbar"><label for="routeSelect">Transit line</label><select id="routeSelect"><option value="">All routes</option></select><span class="map-info" id="mapCount">— vehicles</span><button type="button" class="map-reset" id="map-reset">⌖ Boston</button><button type="button" class="map-reset" id="map-zoom-in">＋</button><button type="button" class="map-reset" id="map-zoom-out">－</button></div><div id="map" aria-label="Map of Boston-area transit vehicles"></div><div class="panel-bottom"><span><span class="legend-dot red"></span> Red <span class="legend-dot orange"></span> Orange <span class="legend-dot blue"></span> Blue <span class="legend-dot green"></span> Green</span><span>Map data © OpenStreetMap</span></div></div>
+          <div class="panel feed-panel"><div class="panel-head"><div><span class="eyebrow muted">VEHICLE ACTIVITY</span><h3>Vehicle activity</h3></div><span class="badge outline" id="feedBadge">TRACKING</span></div><div class="feed-intro">Most recent vehicle observations</div><div id="vehicleFeed" class="vehicle-feed"><div class="empty">Loading vehicle activity…</div></div><div class="panel-bottom"><span id="feedStatus">Data updates on refresh</span><span>◷</span></div></div></div>
+        </section>
+        <section class="section analytics" id="analytics"><div class="section-head"><div><span class="eyebrow muted">HISTORICAL INTELLIGENCE</span><h2>Look beyond the moment</h2></div></div><div class="panel-grid lower"><div class="panel chart-panel"><div class="panel-head"><div><span class="eyebrow muted">ROUTE PERFORMANCE</span><h3>Average delay by line</h3></div><span class="badge outline" id="historyBadge">DEMO HISTORY</span></div><div class="bars" id="routeBars"></div><p class="tiny">Historical averages use stored observations. Demo history is synthesized for illustration.</p></div><div class="panel insight-panel" id="model"><div class="panel-head"><div><span class="eyebrow muted">MACHINE LEARNING</span><h3>Anomaly detection</h3></div><span class="ai-chip">✳ ML</span></div><p class="insight-intro">IsolationForest looks for unusually different historical delay observations. It does not predict future delays.</p><div class="model-block"><div class="model-status" id="modelStatus">Training analysis…</div><div id="modelResults" class="model-list"></div></div><p class="tiny" id="modelCaveat">The model's training source is displayed explicitly.</p></div></div></section>
+        <footer><span>◈ SIGNAL <span class="footer-dim">· city transit intelligence</span></span><span>Educational prototype · Not official travel guidance</span></footer>
+      </div>
+    </main>
+  </div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="demo-data.js"></script><script src="app.js"></script><script src="map-experience.js"></script>
+</body></html>
