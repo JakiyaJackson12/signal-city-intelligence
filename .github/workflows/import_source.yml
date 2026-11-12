@@ -1,0 +1,30 @@
+name: Import currently published frontend
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/import_source.yml'
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch published frontend source
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$(dirname 'index.html')"; curl --fail --silent --show-error --location --retry 3 --max-time 30 'https://signal-city-transit.netlify.app/index.html' -o 'index.html'
+          mkdir -p "$(dirname 'app.js')"; curl --fail --silent --show-error --location --retry 3 --max-time 30 'https://signal-city-transit.netlify.app/app.js' -o 'app.js'
+          mkdir -p "$(dirname 'demo-data.js')"; curl --fail --silent --show-error --location --retry 3 --max-time 30 'https://signal-city-transit.netlify.app/demo-data.js' -o 'demo-data.js'
+          mkdir -p "$(dirname 'styles.css')"; curl --fail --silent --show-error --location --retry 3 --max-time 30 'https://signal-city-transit.netlify.app/styles.css' -o 'styles.css'
+          mkdir -p "$(dirname 'map-experience.css')"; curl --fail --silent --show-error --location --retry 3 --max-time 30 'https://signal-city-transit.netlify.app/map-experience.css' -o 'map-experience.css'
+          mkdir -p "$(dirname 'map-experience.js')"; curl --fail --silent --show-error --location --retry 3 --max-time 30 'https://signal-city-transit.netlify.app/map-experience.js' -o 'map-experience.js'
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add 'index.html' 'app.js' 'demo-data.js' 'styles.css' 'map-experience.css' 'map-experience.js'
+          if ! git diff --cached --quiet; then
+            git commit -m 'Import published frontend source for full-stack deployment'
+            git push
+          fi
