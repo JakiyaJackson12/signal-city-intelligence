@@ -1,0 +1,29 @@
+name: Full-stack smoke test
+on:
+  push:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: 'api/requirements.txt'
+      - run: python -m pip install -r api/requirements.txt
+      - name: Verify FastAPI frontend and API routes
+        env:
+          PYTHONPATH: .
+        run: |
+          python - <<'PY'
+          from api.main import app
+          from fastapi.testclient import TestClient
+          c=TestClient(app)
+          for route in ('/', '/api/health', '/api/observations', '/api/snapshot?mode=demo', '/api/anomalies?mode=demo', '/api/docs'):
+              r=c.get(route); assert r.status_code == 200, (route, r.status_code, r.text[:200])
+          print('SIGNAL frontend + backend + ML smoke checks passed')
+          PY
