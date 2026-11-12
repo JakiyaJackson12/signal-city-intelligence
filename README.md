@@ -1,4 +1,12 @@
 # SIGNAL City Intelligence
+## Deploy the real full-stack app
+
+[**Deploy SIGNAL on Render (frontend + FastAPI backend)**](https://render.com/deploy?repo=https://github.com/JakiyaJackson12/signal-city-intelligence)
+
+This repository now includes the complete frontend, Python backend, dependencies, automated GitHub full-stack tests, and a `render.yaml` deployment blueprint. After deploying, check `/api/health` and `/api/docs` on the new Render URL. The existing Netlify URL is a static frontend demonstration **until** the full-stack service is live.
+
+**Storage note:** The included SQLite database on a free Render service is ephemeral and resets when its instance restarts. Choose persistent storage before describing database records as durable. Free web services may also sleep after inactivity.
+
 **Live interactive demo:** [Open SIGNAL live demo](https://signal-city-transit.netlify.app)
 
 
