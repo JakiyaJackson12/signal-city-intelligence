@@ -1,0 +1,13 @@
+# SIGNAL Netlify frontend + serverless API bridge
+# Python/FastAPI/scikit-learn must run on an external service, configured via
+# Netlify environment variable PYTHON_API_ORIGIN (HTTPS origin, no /api).
+[build]
+  command = "mkdir -p dist && cp index.html app.js demo-data.js map-experience.js styles.css map-experience.css dist/"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api?path=:splat"
+  status = 200
+  force = true
